@@ -5,7 +5,7 @@ SNMP modules for Ansible
 
 Currently this is only a test and there's a good chance that a lot of the code will change.
 
-This is just the initial code and it might not currently work, handle with care.
+This is just the initial code and I might change the way variables are returned. Handle with care.
 
 ## Dependencies
 
