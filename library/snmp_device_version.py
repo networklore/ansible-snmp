@@ -158,9 +158,9 @@ def main():
         module.fail_json(msg=str(err))
 
     results = {}
-    results['device_vendor'] = hostinfo.vendor
-    results['device_os'] = hostinfo.os
-    results['device_version'] = hostinfo.version
+    results['ansible_device_vendor'] = hostinfo.vendor
+    results['ansible_device_os'] = hostinfo.os
+    results['ansible_device_version'] = hostinfo.version
 
 
     module.exit_json(ansible_facts=results)
