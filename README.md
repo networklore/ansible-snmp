@@ -1,5 +1,5 @@
 # ansible-snmp
-SNMP modules for Ansible
+SNMP modules for Ansible. Some more information about this module is available at [Networklore](http://networklore.com/ansible-snmp/).
 
 ## Alpha code
 
@@ -9,9 +9,9 @@ This is just the initial code and I might change the way variables are returned.
 
 ## Dependencies
 
-These modules requires:
+This modules requires:
 
-* [nelsnmp](https://github.com/networklore/nelsnmp) 0.2.1 or later
+* [nelsnmp](http://networklore.com/nelsnmp/) 0.2.2 or later
 
 ## Installation of requirements
 ```
