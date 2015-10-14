@@ -11,7 +11,7 @@ This is just the initial code and I might change the way variables are returned.
 
 This modules requires:
 
-* [nelsnmp](http://networklore.com/nelsnmp/) 0.2.2 or later
+* [nelsnmp](http://networklore.com/nelsnmp/) 0.2.3 or later
 
 ## Installation of requirements
 ```
