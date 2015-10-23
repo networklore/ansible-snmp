@@ -121,7 +121,7 @@ def main():
             username=dict(required=False),
             level=dict(required=False, choices=['authNoPriv', 'authPriv']),
             integrity=dict(required=False, choices=['md5', 'sha']),
-            port=dict(required=False, default=161),
+            port=dict(required=False, default=161, type='int'),
             privacy=dict(required=False, choices=[
                 'des', '3des', 'aes', 'aes192', 'aes256']),
             authkey=dict(required=False),
