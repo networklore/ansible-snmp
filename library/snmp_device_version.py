@@ -19,7 +19,7 @@ DOCUMENTATION = '''
 
 module: snmp_device_version
 author: Patrick Ogenstad (@networklore)
-short_description: Returns version info of a deice
+short_description: Returns version info of a device
 description:
     - Returns vendor, os and version of an SNMP device.
 requirements:
@@ -77,7 +77,7 @@ EXAMPLES = '''
 - snmp_device_version: host={{ inventory_hostname }} version=2c community=public
 
 # Get device info with SNMPv3
-- cisco_snmp_save_config:
+- snmp_device_version:
     host={{ inventory_hostname }}
     version=3
     level=authPriv
@@ -89,7 +89,6 @@ EXAMPLES = '''
 '''
 
 from ansible.module_utils.basic import *
-# from collections import defaultdict
 
 try:
     from nelsnmp.snmp import SnmpHandler
@@ -126,9 +125,9 @@ def main():
                 'des', '3des', 'aes', 'aes192', 'aes256']),
             authkey=dict(required=False),
             privkey=dict(required=False)),
-            required_together=(
-                ['username', 'level', 'integrity', 'authkey'],
-                ['privacy', 'privkey'],),
+        required_together=(
+            ['username', 'level', 'integrity', 'authkey'],
+            ['privacy', 'privkey'],),
         supports_check_mode=False)
 
     m_args = module.params
@@ -168,7 +167,6 @@ def main():
     results['ansible_device_vendor'] = hostinfo.vendor
     results['ansible_device_os'] = hostinfo.os
     results['ansible_device_version'] = hostinfo.version
-
 
     module.exit_json(ansible_facts=results)
 
