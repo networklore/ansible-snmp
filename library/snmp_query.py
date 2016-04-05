@@ -74,6 +74,12 @@ options:
         description:
             - Oid or a list of oids to poll
         required: true
+    query_type:
+        description:
+            - Type of SNMP query to use
+        choices: [ 'get', 'getnext']
+        default: 'get'
+        required: false
 '''
 
 EXAMPLES = '''
@@ -133,7 +139,7 @@ def main():
             authkey=dict(required=False),
             privkey=dict(required=False),
             oid=dict(required=True, type='list'),
-            query_type=dict(choices=['get'], default='get')),
+            query_type=dict(choices=['get', 'getnext'], default='get')),
         required_together=(
             ['username', 'level', 'integrity', 'authkey'],
             ['privacy', 'privkey']
@@ -168,20 +174,29 @@ def main():
         module.fail_json(msg=str(err))
 
     results = {}
-    for oid in m_args['oid']:
-        results[oid] = None
 
-    try:
-        varbinds = dev.get(*m_args['oid'])
-    except Exception, err:
-        module.fail_json(msg=str(err))
-    for oid, value in varbinds:
-        for desired_oid in m_args['oid']:
-            if desired_oid in oid:
-                if isinstance(value, NoSuchObject):
-                    results[desired_oid] = None
-                else:
-                    results[desired_oid] = value
+    if m_args['query_type'] == 'get':
+        for oid in m_args['oid']:
+            results[oid] = None
+        try:
+            varbinds = dev.get(*m_args['oid'])
+        except Exception, err:
+            module.fail_json(msg=str(err))
+        for oid, value in varbinds:
+            for desired_oid in m_args['oid']:
+                if desired_oid in oid:
+                    if isinstance(value, NoSuchObject):
+                        results[desired_oid] = None
+                    else:
+                        results[desired_oid] = value
+    else:
+        try:
+            vartable = dev.getnext(*m_args['oid'])
+        except Exception, err:
+            module.fail_json(msg=str(err))
+        for varbinds in vartable:
+            for oid, value in varbinds:
+                results[oid] = value
 
     module.exit_json(**results)
 
